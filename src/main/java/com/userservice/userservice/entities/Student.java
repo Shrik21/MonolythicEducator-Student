@@ -2,12 +2,14 @@ package com.userservice.userservice.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.UUID;
 
 @Entity
 @Data
+@ToString
 public class Student {
 
     @Id
@@ -32,6 +34,9 @@ public class Student {
 
     @ManyToOne
     @JoinColumn(name = "educator_id")
+    @ToString.Exclude
     private Educator educator;
+
+
 
 }

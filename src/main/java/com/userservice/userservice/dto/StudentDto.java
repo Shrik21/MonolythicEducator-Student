@@ -1,5 +1,4 @@
 package com.userservice.userservice.dto;
-
 import lombok.Data;
 
 import java.util.UUID;
@@ -12,4 +11,5 @@ public class StudentDto {
     private String phone;
     private int age;
     private String grade;
+    private EducatorDto educatorDto;
 }

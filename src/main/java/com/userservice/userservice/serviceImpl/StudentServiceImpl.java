@@ -1,8 +1,10 @@
 package com.userservice.userservice.serviceImpl;
 
+import com.userservice.userservice.utilities.DTOsCovertor;
 import com.userservice.userservice.dto.StudentDto;
 import com.userservice.userservice.entities.Student;
 import com.userservice.userservice.repos.StudentRepository;
+import com.userservice.userservice.service.EducatorService;
 import com.userservice.userservice.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,25 +20,31 @@ public class StudentServiceImpl implements StudentService {
     private static final Logger logger = Logger.getLogger(StudentServiceImpl.class.getName());
 
     @Autowired
+    private DTOsCovertor dtosCovertor;
+
+    @Autowired
     private StudentRepository studentRepository;
+
+//    @Autowired
+//    private EducatorService educatorService;
 
     @Override
     public StudentDto createStudent(Student student) {
         logger.info("Creating student: " + student);
-        return convertToStudentDto(studentRepository.save(student));
+        return dtosCovertor.convertToStudentDto(studentRepository.save(student));
     }
 
     @Override
     public List<StudentDto> getAllStudents() {
         logger.info("Fetching all students");
         return studentRepository.findAll().stream()
-                .map(this::convertToStudentDto).collect(Collectors.toList());
+                .map(dtosCovertor::convertToStudentDto).collect(Collectors.toList());
     }
 
     @Override
     public StudentDto getStudentById(UUID studentId) {
         logger.info("Fetching student by id: " + studentId);
-        return convertToStudentDto(studentRepository.findById(studentId).orElse(null));
+        return dtosCovertor.convertToStudentDto(studentRepository.findById(studentId).orElse(null));
     }
 
     @Override
@@ -47,7 +55,7 @@ public class StudentServiceImpl implements StudentService {
             existingStudent.setName(student.getName());
             existingStudent.setAge(student.getAge());
             existingStudent.setGrade(student.getGrade());
-            return convertToStudentDto(studentRepository.save(existingStudent));
+            return dtosCovertor.convertToStudentDto(studentRepository.save(existingStudent));
         }
         return null;
     }
@@ -58,16 +66,5 @@ public class StudentServiceImpl implements StudentService {
         studentRepository.deleteById(studentId);
     }
 
-    // Helper method to convert Student entity to StudentDto
-    private StudentDto convertToStudentDto(Student student) {
-        logger.info("Converting student to StudentDto: " + student);
-        StudentDto studentDto = new StudentDto();
-        studentDto.setId(student.getId());
-        studentDto.setName(student.getName());
-        studentDto.setAge(student.getAge());
-        studentDto.setEmail(student.getEmail());
-        studentDto.setPhone(student.getPhone());
-        studentDto.setGrade(student.getGrade());
-        return studentDto;
-    }
+
 }
