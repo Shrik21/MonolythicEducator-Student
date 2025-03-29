@@ -4,6 +4,7 @@ import com.userservice.userservice.dto.StudentDto;
 import com.userservice.userservice.entities.Student;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public interface StudentService {
@@ -12,4 +13,5 @@ public interface StudentService {
     StudentDto getStudentById(UUID studentId);
     StudentDto updateStudent(UUID studentId, Student student);
     void deleteStudent(UUID studentId);
+
 }

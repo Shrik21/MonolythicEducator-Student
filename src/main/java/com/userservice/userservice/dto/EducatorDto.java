@@ -1,7 +1,9 @@
 package com.userservice.userservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+//import com.userservice.userservice.config.OpenAPIConfig;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 

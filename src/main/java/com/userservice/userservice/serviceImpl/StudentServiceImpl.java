@@ -1,10 +1,10 @@
 package com.userservice.userservice.serviceImpl;
 
+import com.userservice.userservice.config.CustomProperties;
 import com.userservice.userservice.utilities.DTOsCovertor;
 import com.userservice.userservice.dto.StudentDto;
 import com.userservice.userservice.entities.Student;
 import com.userservice.userservice.repos.StudentRepository;
-import com.userservice.userservice.service.EducatorService;
 import com.userservice.userservice.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +25,13 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     private StudentRepository studentRepository;
 
-//    @Autowired
-//    private EducatorService educatorService;
+    private CustomProperties properties;
+
+    @Autowired
+    public StudentServiceImpl(CustomProperties properties) {
+        this.properties = properties;
+
+    }
 
     @Override
     public StudentDto createStudent(Student student) {
@@ -37,6 +42,8 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<StudentDto> getAllStudents() {
         logger.info("Fetching all students");
+        logger.info("Fetching principal name: " + properties.getPrincipalName());
+        logger.info("Fetching holiday: " + properties.getHoliday());
         return studentRepository.findAll().stream()
                 .map(dtosCovertor::convertToStudentDto).collect(Collectors.toList());
     }
@@ -65,6 +72,7 @@ public class StudentServiceImpl implements StudentService {
         logger.info("Deleting student with id: " + studentId);
         studentRepository.deleteById(studentId);
     }
+
 
 
 }

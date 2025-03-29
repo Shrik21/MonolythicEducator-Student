@@ -1,11 +1,13 @@
 package com.userservice.userservice.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
 
+
+@Getter
+@Setter
 @Entity
 @Data
 @ToString
@@ -24,4 +26,6 @@ public class Educator {
     @OneToMany(mappedBy = "educator",cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, targetEntity = Student.class)
     @ToString.Exclude
     private List<Student> students;
+
+
 }
