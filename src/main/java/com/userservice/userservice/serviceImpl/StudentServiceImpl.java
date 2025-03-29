@@ -2,6 +2,7 @@ package com.userservice.userservice.serviceImpl;
 
 import com.userservice.userservice.config.CustomProperties;
 import com.userservice.userservice.config.EducatorConfig;
+import com.userservice.userservice.exceptions.StudentNotFoundException;
 import com.userservice.userservice.utilities.DTOsCovertor;
 import com.userservice.userservice.dto.StudentDto;
 import com.userservice.userservice.entities.Student;
@@ -55,7 +56,8 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentDto getStudentById(UUID studentId) {
         logger.info("Fetching student by id: " + studentId);
-        return dtosCovertor.convertToStudentDto(studentRepository.findById(studentId).orElse(null));
+        return dtosCovertor.convertToStudentDto(studentRepository.findById(studentId).
+                orElseThrow(() -> new StudentNotFoundException("Student not existed with id :"+studentId)));
     }
 
     @Override
