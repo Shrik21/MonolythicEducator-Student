@@ -3,6 +3,7 @@ package com.userservice.userservice.controllers;
 import com.userservice.userservice.dto.StudentDto;
 import com.userservice.userservice.entities.Student;
 import com.userservice.userservice.service.StudentService;
+import com.userservice.userservice.swagger.StudentAPIs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/student")
-public class StudentController {
+public class StudentController implements StudentAPIs {
 
     @Autowired
     private StudentService studentService;

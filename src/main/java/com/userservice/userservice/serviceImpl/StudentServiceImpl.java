@@ -1,6 +1,7 @@
 package com.userservice.userservice.serviceImpl;
 
 import com.userservice.userservice.config.CustomProperties;
+import com.userservice.userservice.config.EducatorConfig;
 import com.userservice.userservice.utilities.DTOsCovertor;
 import com.userservice.userservice.dto.StudentDto;
 import com.userservice.userservice.entities.Student;
@@ -27,10 +28,12 @@ public class StudentServiceImpl implements StudentService {
 
     private CustomProperties properties;
 
-    @Autowired
-    public StudentServiceImpl(CustomProperties properties) {
-        this.properties = properties;
+    private EducatorConfig educatorConfig;
 
+    @Autowired
+    public StudentServiceImpl(CustomProperties properties, EducatorConfig educatorConfig) {
+        this.properties = properties;
+        this.educatorConfig = educatorConfig;
     }
 
     @Override
@@ -44,6 +47,7 @@ public class StudentServiceImpl implements StudentService {
         logger.info("Fetching all students");
         logger.info("Fetching principal name: " + properties.getPrincipalName());
         logger.info("Fetching holiday: " + properties.getHoliday());
+        logger.info("Fetching educator: " + educatorConfig.getManager());
         return studentRepository.findAll().stream()
                 .map(dtosCovertor::convertToStudentDto).collect(Collectors.toList());
     }
